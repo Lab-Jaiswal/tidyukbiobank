@@ -24,5 +24,5 @@ individuals_without_disease <- function(icd_list, ukb_data, ...)  {
 
   indiv_without_disease_whole <- list(indiv_without_disease_combined, indiv_without_disease_icd9, indiv_without_disease_icd10, indiv_without_disease_COD, indiv_without_disease_SR)
   names(indiv_without_disease_whole) <- c("combined", "icd9", "icd10", "cause_of_death", "self_reported")
-  
+  indiv_without_disease_whole
 }
