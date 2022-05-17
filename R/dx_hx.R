@@ -4,8 +4,8 @@
 #' "Hx_of_{disease_name}" contains 0's (indicating an absence of the diagnosis) or 1's (indicating the presence of a diagnosis)
 #' 
 #' @param icd_list a list of the icd10 codes you wish to investigate
-#' @param dataframe the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)
 #' @param disease_name a string containing the name of the disease(s) of interest
+#' @param ukb_data the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)
 #' @keywords hx
 #' @export
 #' @examples
