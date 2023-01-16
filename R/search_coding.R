@@ -9,7 +9,7 @@
 
 
 search_coding <- function(element){
-  self_reported_df_loc <- system.file("extdata", "self_reported_df", package = "tools4ukbb")
+  self_reported_df_loc <- system.file("extdata", "self_reported_df", package = "tidyUkBioBank")
   self_reported_df <- read_rds(self_reported_df_loc)
   element <- tolower(element)
   relevant_code <- filter(self_reported_df, str_detect(coding, element))
