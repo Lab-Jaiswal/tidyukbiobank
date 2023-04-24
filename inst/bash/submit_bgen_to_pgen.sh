@@ -27,7 +27,7 @@ fi
 sbatch -o "${data_directory}/Logs/%A_%a.log" `#put into log` \
             -a "1-${bgen_array_length}" `#initiate job array equal to the number of fastq files` \
             -W `#indicates to the script not to move on until the sbatch operation is complete` \
-            "${code_directory}/make_pgen.sh" \
+            "${code_directory}/bgen_to_pgen.sh" \
             "$data_directory" \
             "$parent_directory" \
             "$output_directory"
