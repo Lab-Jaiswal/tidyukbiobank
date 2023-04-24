@@ -30,16 +30,22 @@ Install latest development version: `devtools::install_github("Lab-Jasiwal/tidyU
 
  1. Make a UKB fileset                                                                                                                                   
         a. Download and decrypt your data from the Uk BioBank                                                                                           
-        b. Run the following commands to create a fileset:                                                                                               
-        `ukb_unpack ukbxxxx.enc key
+        b. Run the following commands to create a fileset:
+        
+         ukb_unpack ukbxxxx.enc key
          ukb_conv ukbxxxx.enc_ukb r
-         ukb_conv ukbxxxx.enc_ukb docs`
+         ukb_conv ukbxxxx.enc_ukb docs
  2. Make a UKB dataset                                                                                                                                  
-        a.  Install the ukbtools package:                                                                                                     `devtools::install_github("kenhanscombe/ukbtools", dependencies = TRUE)`                                                                        
-        b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-data.html) ukb_df command, which requires the stem of your fileset and its path:                                                            
-`ukb_data <- ukb_df("ukbxxxx", path = "/full/path/to/my/data")`
+        a.  Install the ukbtools package:
+        
+        devtools::install_github("kenhanscombe/ukbtools", dependencies = TRUE)                                                                        
+        b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-data.html) ukb_df command, which requires the stem of your fileset and its path:   
+        
+        ukb_data <- ukb_df("ukbxxxx", path = "/full/path/to/my/data")
 
-The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices (I used the following command: `cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab`). 
+The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices. I used the following command: 
+
+        cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab 
 
 ### Genetic Data
 
