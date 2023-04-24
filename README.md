@@ -62,8 +62,18 @@ The ukb_df() function returns a dataframe with usable column names. This command
         c. cpus-per-task *must* stay equal to one
 6. Run submit_make_pgen.sh using the following command:
         `./sumbit_make_pgen.sh /loaction/of/your/bgen/and/sample/files /location/where/you/would/like/the/output/saved`
+7. Create a chromosome list containing all of the chromosomes of interest in the format saved on your device. Example:
+         `seqs <- seq(1:22) %>% append(c("X", "Y"))`
+         `chr_list <- sprintf("c%s", seqs)`
+8. Create a list of rsids you are interested in getting the genotypes for. Example:
+         `rsid <- c("rs1569419", "rs7535588")`
+9. Create a dataframe containing the chromosomes and indexes of the rsids you are interested in. Example (directory is the filepath of the directory with the psam/ pgen/ pvar files):
+         `variant_df <- get_variants(chr_list, rsid, directory)` 
+10. Get a psam file with the samples level information. Example (it does not matter what chromosome you choose to do this with):
+         `psam <- make_psam("c1", directory)`
+11. Get the genotypes on a sample level. Example:
+         `genotypes <- get_genotypes(variants_df, directory, psam)`
         
-
 § Full details on creating a UKB fileset: https://biobank.ctsu.ox.ac.uk/~bbdatan/Accessing_UKB_data_v2.3.pdf   
 § Full details on making a UKB dataset: https://github.com/kenhanscombe/ukbtools      
 § Full details on downloading UKB genetic data: https://biobank.ndph.ox.ac.uk/ukb/ukb/docs/ukbgene_instruct.html   
@@ -122,7 +132,6 @@ Arguments:
 Output: 
 individuals_with_disease(): A list of all individuals (identified by eid) that have been diagnosed with the icd_code(s) of interest. 
 individuals_without_disease(): A list of all individuals (identified by eid) that have not been diagnosed with the icd_code(s) of interest. 
-
 
 ## Citations
 Hanscombe KB, Coleman J, Traylor M, Lewis CM (e-print 158113). “ukbtools: An R package to manage and query UK Biobank data.” _bioRxiv_. <URL: https://doi.org/10.1101/158113>.
