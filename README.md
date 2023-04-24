@@ -40,7 +40,7 @@ Install latest development version: `devtools::install_github("Lab-Jasiwal/tidyU
         
         devtools::install_github("kenhanscombe/ukbtools", dependencies = TRUE)                                                                        
         
-        b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-data.html) ukb_df command, which requires the stem of your fileset and its path:   
+b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-data.html) ukb_df command, which requires the stem of your fileset and its path:   
         
         ukb_data <- ukb_df("ukbxxxx", path = "/full/path/to/my/data")
 
