@@ -46,7 +46,7 @@ b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-
 
 The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices. I used the following command: 
 
-        cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab 
+        cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab' 
 
 ### Genetic Data
 
