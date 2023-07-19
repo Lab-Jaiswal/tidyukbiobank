@@ -50,6 +50,15 @@ The ukb_df() function returns a dataframe with usable column names. This command
         for x in ./*.tab; do
           mkdir "${x%.*}" && mv "$x" "${x%.*}"
         done
+        for i in ./* # iterate over all files in current dir
+          do
+           if [ -d "$i" ] # if it's a directory
+            then
+              cp ukb673607.r "$i" # copy ukb673607.r into it
+              cp ukb673607.log "$i" # copy ukb673607.log into it
+              cp ukb673607.html "$i" # copy ukb673607.html into it
+           fi
+         done
 
 ### Genetic Data
 
