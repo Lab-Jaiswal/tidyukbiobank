@@ -59,6 +59,7 @@ The ukb_df() function returns a dataframe with usable column names. This command
               cp ukb673607.html "$i" # copy ukb673607.html into it
            fi
          done
+         dirname $(ls */*.tab) | xargs -I % bash -c "mv %/%.tab %/ukb673607.tab"
 
 ### Genetic Data
 
