@@ -63,6 +63,7 @@ In bash:
          dirname $(ls */*.tab) | xargs -I % bash -c "mv %/%.tab %/ukb673607.tab"
 
 In R:
+
         library(ukbtools)
         library(magrittr)
         library(tidyverse) 
