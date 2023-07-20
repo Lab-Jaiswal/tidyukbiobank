@@ -45,6 +45,7 @@ b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-
         ukb_data <- ukb_df("ukbxxxx", path = "/full/path/to/my/data")
 
 The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices. I used the following commands: 
+
 In bash:
 
         cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab' 
@@ -55,12 +56,12 @@ In bash:
           do
            if [ -d "$i" ] # if it's a directory
             then
-              cp ukb673607.r "$i" # copy ukb673607.r into it
-              cp ukb673607.log "$i" # copy ukb673607.log into it
-              cp ukb673607.html "$i" # copy ukb673607.html into it
+              cp ukbxxxx.r "$i" # copy ukbxxxx.r into it
+              cp ukbxxxx.log "$i" # copy ukbxxxx.log into it
+              cp ukbxxxx.html "$i" # copy ukbxxxx.html into it
            fi
          done
-         dirname $(ls */*.tab) | xargs -I % bash -c "mv %/%.tab %/ukb673607.tab"
+         dirname $(ls */*.tab) | xargs -I % bash -c "mv %/%.tab %/ukbxxxx.tab"
 
 In R:
 
