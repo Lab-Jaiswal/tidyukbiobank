@@ -44,7 +44,8 @@ b.  Run [ukbtools](https://kenhanscombe.github.io/ukbtools/articles/explore-ukb-
         
         ukb_data <- ukb_df("ukbxxxx", path = "/full/path/to/my/data")
 
-The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices. I used the following command: 
+The ukb_df() function returns a dataframe with usable column names. This command may take several minutes and, depending on the amount of memory available, you may need to split the ukbxxxx.tab dataframe into several peices. I used the following commands: 
+In bash:
 
         cat ukbxxxxx.tab | parallel -j 16 --header : --pipe -N10000 'cat >subset_{#}.tab' 
         for x in ./*.tab; do
@@ -61,6 +62,22 @@ The ukb_df() function returns a dataframe with usable column names. This command
          done
          dirname $(ls */*.tab) | xargs -I % bash -c "mv %/%.tab %/ukb673607.tab"
 
+In R:
+        library(ukbtools)
+        library(magrittr)
+        library(tidyverse) 
+        subset_dir <- "file/path/with/subsetted/data"
+        subset_list <- list.files(subset_dir, pattern="subset_*") %>% sort
+        subset_list_path <- str_c(subset_dir, subset_list, sep="/")
+
+        read_df <- function(subsets_dir) {
+               ukb_object <- ukb_df("ukbxxxx", path=subsets_dir)
+               tibble(ukb_object) 
+        }
+
+        ukb_full <- map(subset_list_path, read_df) %>% bind_rows()
+        write_rds(ukb_full, "ukb_phen_data_final_todays_date.rds")
+        
 ### Genetic Data
 
 1. Downlaod the keyfile provided by the UkBioBank into the same folder you would like to download your data
