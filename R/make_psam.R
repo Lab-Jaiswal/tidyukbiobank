@@ -9,8 +9,14 @@
 #' make_psam()
 
 make_psam <- function(chromosome, directory){
-  directory_list <- list.files(directory, pattern = ".psam", full.names = TRUE) 
-  psam_selected <- directory_list[1]
-  psam <- read_tsv(psam_selected)
+    chromosome_pattern <- str_c(".*_", chromosome, "_.*.psam")
+    psam_selected <- list.files(directory, pattern = chromosome_pattern, full.names = TRUE) 
+    if (length(psam_selected) > 1) {
+        print(str_c("ambiguous chromosome pattern detected:", chromosome_pattern))
+        return(NA)
+    } else {
+        psam <- read_tsv(psam_selected)
+        return(psam)
+    }
 }
 
