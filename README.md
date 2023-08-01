@@ -1,6 +1,6 @@
 # tidyUkBioBank
 
-tidyUkBioBank is an R-based package that you to easily extract, subset, and parse diagnositic and genetic data from the UK Biobank dataset.
+tidyUkBioBank is an R-based package that you to easily extract, subset, and parse diagnositic (icd, cancer related, self reported dxs, etc.) from the UK Biobank dataset.
 
 To avoid repetitive calls for standard diagnostic and genetic variables, we created functions to output meaningful columns, such as:
 
