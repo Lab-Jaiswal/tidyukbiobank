@@ -26,7 +26,7 @@ Finally, this package allows you to define a diagnosis based on multiple sources
 Install latest development version: `devtools::install_github("Lab-Jasiwal/tidyUkBioBank", dependencies = TRUE)`
 
 ## Prerequisites 
-### Phenotypic Data
+### Obtaining Phenotypic Data form the UKBioBank
 
  1. Make a UKB fileset                                                                                                                                   
         a. Download and decrypt your data from the Uk BioBank                                                                                           
@@ -80,47 +80,6 @@ In R:
 
         ukb_full <- map(subset_list_path, read_df) %>% bind_rows()
         write_rds(ukb_full, "ukb_phen_data_final_todays_date.rds")
-        
-### Genetic Data
-
-1. Downlaod the keyfile provided by the UkBioBank into the same folder you would like to download your data
-        a. It will look something like k####r####.key, where the #'s are numbers
-        b. The keyfile will be emailed, along with and MD5 checksum and instructions, by the UkBioBank once your data is ready.
-2. Save `parallel_fetch.sh` to the same folder you would like to download your data
-        a. `parallel_fetch.sh` can be found [here](https://github.com/neurodatascience/ukbm)
-3. Run `bash parallel_fetch.sh -f 22828 gfetch k####r####.key`
-        a. If you wish to download another genetic field, swap out 22828 for the field_id
-        b. This step will take anywhere from 12-24 hours and otuput .sample and .bgen files for every chromosome
-        c. You can download each .sample/.bgen pair on a per chromosome basis using `gfetch 22828 -c#` (the # is the number chromosome you want downlaoded); however, if you wish to analyze genetic data across multiple chromosomes, `parallel_fetch.sh` is much faster and memory efficient
-4. Once the .sample and .bgen files have been generated, download the following files from the [inst/bash](https://github.com/Lab-Jaiswal/tools4ukbb/tree/main/inst/bash) folder in this package:
-        
-        - bgen_to_pgen.sh
-        - submit_bgen_to_pgen.sh
-5. Customize the SBATCH header in `make_pgen.sh` to meet your institution's conventions:
-        a. memory may be reduced up to 64GB
-        b. time may be reduced to as little as 12 hours, but I reccomend 24 if you reduce the memory
-        c. cpus-per-task *must* stay equal to one
-6. Run submit_make_pgen.sh using the following command:
-
-        ./sumbit_make_pgen.sh /loaction/of/your/bgen/and/sample/files /location/where/you/would/like/the/output/saved
-
-7. Create a chromosome list containing all of the chromosomes of interest in the format saved on your device. Example:
-
-         seqs <- seq(1:22) %>% append(c("X", "Y"))
-         
-         chr_list <- sprintf("c%s", seqs)
-8. Create a list of rsids you are interested in getting the genotypes for. Example:
-
-         rsid <- c("rs1569419", "rs7535588")
-9. Create a dataframe containing the chromosomes and indexes of the rsids you are interested in. Example (directory is the filepath of the directory with the psam/ pgen/ pvar files):
-
-         variant_df <- get_variants(chr_list, rsid, directory)
-10. Get a psam file with the samples level information. Example (it does not matter what chromosome you choose to do this with):
-
-         psam <- make_psam("c1", directory)
-11. Get the genotypes on a sample level. Example:
-
-         genotypes <- get_genotypes(variants_df, directory, psam)
         
 § Full details on creating a UKB fileset: https://biobank.ctsu.ox.ac.uk/~bbdatan/Accessing_UKB_data_v2.3.pdf   
 § Full details on making a UKB dataset: https://github.com/kenhanscombe/ukbtools      
