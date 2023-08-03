@@ -10,8 +10,7 @@
 date_of_birth <- function(dataframe) {
   
   birth<-select(dataframe, eid, year_of_birth_f34_0_0, month_of_birth_f52_0_0)
-  birth[,"birth_month"]<- as.integer(factor(birth$month_of_birth_f52_0_0, levels = month.name))
-  birth[, "DOB_numeric"]<- str_c(birth$year_of_birth_f34_0_0, "-",birth$birth_month, "-01")
+  birth[, "DOB_numeric"]<- str_c(birth$year_of_birth_f34_0_0, "-",birth$month_of_birth_f52_0_0, "-01")
   birth[,"DOB"] <- ymd(birth$DOB_numeric)
   
   Date_of_birth<-select(birth, eid, DOB)
