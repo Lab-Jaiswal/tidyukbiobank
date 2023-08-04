@@ -11,8 +11,8 @@
 cause_of_death_counts <- function(description, dataframe) {
   COD_eids <- get_cause_of_death_eids(description, dataframe)
   COD_sex <- filter(dataframe, is_in(eid, COD_eids)) %>% select(genetic_sex_f22001_0_0, eid)
-  COD_Female_count <- filter(COD_sex, genetic_sex_f22001_0_0 == "Female") %>% select(eid) %>% unique() %>% nrow()
-  COD_Male_count <- filter(COD_sex, genetic_sex_f22001_0_0 == "Male") %>% select(eid) %>% unique() %>% nrow()
+  COD_Female_count <- filter(COD_sex, genetic_sex_f22001_0_0 == 0) %>% select(eid) %>% unique() %>% nrow()
+  COD_Male_count <- filter(COD_sex, genetic_sex_f22001_0_0 == 1) %>% select(eid) %>% unique() %>% nrow()
   COD_Total <- COD_Female_count + COD_Male_count
   COD_Percent_female <- COD_Female_count/COD_Total
   COD_Percent_male <- COD_Male_count/COD_Total
