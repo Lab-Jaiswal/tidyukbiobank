@@ -12,7 +12,7 @@ self_reported_counts <- function(disease, dataframe) {
   
   coding <- parse_get_SR_table_input(disease) 
   
-  SR_eids <- get_self_reported_eids(coding, ukb_data) 
+  SR_eids <- get_self_reported_eids(coding, dataframe) 
   SR_sex <- filter(dataframe, is_in(eid, SR_eids)) %>% select(genetic_sex_f22001_0_0, eid)
   SR_Female_count <- filter(SR_sex, genetic_sex_f22001_0_0 == "Female") %>% select(eid) %>% unique() %>% nrow()
   SR_Male_count <- filter(SR_sex, genetic_sex_f22001_0_0 == "Male") %>% select(eid) %>% unique() %>% nrow()
