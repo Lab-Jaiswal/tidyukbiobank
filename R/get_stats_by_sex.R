@@ -10,12 +10,12 @@
 
 get_stats_by_sex <- function(sex, dataframe){
   if (str_detect(sex, "^M") | str_detect(sex, "^m")) {
-    sex <- "Male"
+    sex <- 1
   } else if (str_detect(sex, "^F") | str_detect(sex, "^f")) {
-    sex <- "Female"
+    sex <- 0
   } 
   
-  if (sex == "Male" | sex == "Female") {
+  if (sex == 1 | sex == 0) {
     filtered_df <- filter(dataframe, genetic_sex_f22001_0_0 == sex)
   } else {
     filtered_df <- dataframe
