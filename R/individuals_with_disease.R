@@ -14,14 +14,14 @@ individuals_with_disease <- function(icd_list, ukb_data, ...) {
   arguments <- list(...)
   
   if (length(icd9_list) > 0) {
-    icd9_cols <- c("eid", "diagnoses_icd9", "diagnoses_secondary_icd9")
+    icd9_cols <- c("eid", "diagnoses_icd9", "diagnoses_secondary_icd9", "cancer_icd9")
     indiv_with_disease_icd9 <- search_icd_codes(icd9_cols, icd9_list, ukb_data) 
     } else {
       indiv_with_disease_icd9 = NA
     }
   
   if (length(icd10_list) > 0) {
-    icd10_cols <- c("eid","diagnoses_icd10", "diagnoses_secondary_icd10", "underlying_primary_cause_of_death", "contributory_secondary_ca_")
+    icd10_cols <- c("eid","diagnoses_icd10", "diagnoses_secondary_icd10", "underlying_primary_cause_of_death", "contributory_secondary_ca_", "cancer_icd10")
     indiv_with_disease_icd10 <- search_icd_codes(icd10_cols, icd10_list, ukb_data)
     } else {
     indiv_with_disease_icd10 = NA
