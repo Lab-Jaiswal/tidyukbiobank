@@ -75,6 +75,41 @@ dx_date <- function(icd_list, disease_name, dataframe){
   diagnosis_date <- bind_rows(diagnosis_date_icd10, diagnosis_date_icd9) %>% drop_na()
   diagnosis_first_date <- group_by(diagnosis_date, eid) %>% group_modify(get_first__date)
   names(diagnosis_first_date)[names(diagnosis_first_date) == "date_of_diagnosis"] <- str_c("Date_of_first_", disease_name, "_dx")
-  diagnosis_first_date <- diagnosis_first_date
+  column_name <- str_c("Date_of_first_", disease_name, "_dx")
+  diagnosis_first_date_noncancer <- diagnosis_first_date
+
+  indiv_with_disease_df <- as.data.frame(indiv_with_disease[[1]])
+  colnames(indiv_with_disease_df) <- "eid"
+  diagnosis_first_date_cancer <- filter(indiv_with_disease_df, !is_in(eid, diagnosis_first_date_noncancer$eid)) 
+
+  if (nrow(diagnosis_first_date_cancer) > 0){
+    diagnoses_1<-select(dataframe, c(eid, contains("cancer_icd10")))
+    diagnoses_2<-select(dataframe,c(contains("cancer_icd9")))
+    diagnoses_df<-cbind(diagnoses_1, diagnoses_2)
+    
+    icd_with_disease <- diagnosis_first_date_cancer$eid
+    dx_positive <- filter(dataframe, is_in(eid, icd_with_disease))
+    icd_table <- filter(diagnoses_df, is_in(eid, icd_with_disease))
+    
+    diagnosis_long <- pivot_longer(icd_table, -eid, names_to = "Diagnosis_Column", values_to = "diagnosis") %>% filter(!is.na(diagnosis)) %>% filter(is_in(diagnosis, icd_list))
+    diagnosis_long$visit_num <- str_remove_all(diagnosis_long$Diagnosis_Column, "type_of_cancer_icd10_f40006_")
+    diagnosis_long$visit_num <- str_remove_all(diagnosis_long$visit_num, "type_of_cancer_icd9_f40013_")
+    diagnosis_long_filter <- filter(diagnosis_long, is_in(diagnosis, icd_list)) %>% select(-Diagnosis_Column)
+    
+    date_dataframe<-select(dx_positive, c(eid, contains("date_of_cancer_diagnosis"))) %>% lapply(as.character ) %>% as_tibble()
+    date_long <- pivot_longer(date_dataframe, -eid, names_to = "Date_Column", values_to = "date_of_diagnosis") %>% filter(!is.na(date_of_diagnosis)) 
+    date_long$visit_num <- str_remove_all(date_long$Date_Column, "date_of_cancer_diagnosis_f40005_")
+    
+    date_long[, 1]<- sapply(date_long[, 1], as.numeric)
+    date_long <- select(date_long, -Date_Column)
+    diagnosis_date_cancer <- left_join(diagnosis_long_filter, date_long) %>% select(-visit_num, -diagnosis) %>% set_colnames(c("eid", column_name)) 
+    
+    diagnosis_date <- bind_rows(diagnosis_date_cancer, diagnosis_first_date_noncancer)
+  
+  } else {
+      diagnosis_date <- diagnosis_first_date_noncancer
+  }
+
+  diagnosis_date
   
 }
