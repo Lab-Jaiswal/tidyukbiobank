@@ -14,8 +14,8 @@ self_reported_counts <- function(disease, dataframe) {
   
   SR_eids <- get_self_reported_eids(coding, dataframe) 
   SR_sex <- filter(dataframe, is_in(eid, SR_eids)) %>% select(genetic_sex_f22001_0_0, eid)
-  SR_Female_count <- filter(SR_sex, genetic_sex_f22001_0_0 == "Female") %>% select(eid) %>% unique() %>% nrow()
-  SR_Male_count <- filter(SR_sex, genetic_sex_f22001_0_0 == "Male") %>% select(eid) %>% unique() %>% nrow()
+  SR_Female_count <- filter(SR_sex, genetic_sex_f22001_0_0 == 0) %>% select(eid) %>% unique() %>% nrow()
+  SR_Male_count <- filter(SR_sex, genetic_sex_f22001_0_0 == 1) %>% select(eid) %>% unique() %>% nrow()
   SR_Total <- SR_Female_count + SR_Male_count
   SR_Percent_female <- SR_Female_count/SR_Total
   SR_Percent_male <- SR_Male_count/SR_Total
