@@ -19,24 +19,48 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
   icd10_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE)
   icd9_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE, invert=TRUE)
   
-  dx_df_icd10 <- map2(icd10_list, icd10_list, dx_hx, ukb_data) %>%
+  if (length(icd10_list) > 0){
+    dx_df_icd10 <- map2(icd10_list, icd10_list, dx_hx, ukb_data) %>%
     reduce(left_join) %>%
     mutate(Total_Sums_Icd10 = rowSums(select(., -eid))) %>%
     mutate(Presence_of_Icd10_dx = case_when(Total_Sums_Icd10 > 0 ~ 1, Total_Sums_Icd10 < 1 ~ 0))
-  
-  dx_df_icd9 <- map2(icd9_list, icd9_list, dx_hx, ukb_data) %>%
+    ICD10 <- TRUE
+  } else {
+      dx_df_icd10 = data.frame(eid = ukb_data$eid, Total_Sums_Icd10 = 0)
+      ICD10 <- FALSE
+
+  }
+
+  if (length(icd9_list) > 0) {
+    dx_df_icd9 <- map2(icd9_list, icd9_list, dx_hx, ukb_data) %>%
     reduce(left_join) %>%
     mutate(Total_Sums_Icd9 = rowSums(select(., -eid))) %>%
     mutate(Presence_of_Icd9_dx = case_when(Total_Sums_Icd9 > 0 ~ 1, Total_Sums_Icd9 < 1 ~ 0))
-  
-  
+    ICD9 <- TRUE
+  } else {
+      dx_df_icd9 = data.frame(eid = ukb_data$eid, Total_Sums_Icd9 = 0)
+      ICD9 <- FALSE
+  }
+ 
   if (length(SR) > 0) {
-    dx_sr <- map(arguments$self_reported, get_self_reported_table, ukb_data) %>%
+    self_reported_df <- arguments$self_reported
+    print(arguments$self_reported)
+    cancer <- str_detect(self_reported_df, "cancer")
+    print(cancer)
+    if (cancer == TRUE) {
+        self_reported_df <- str_remove(self_reported_df, "cancer")
+        self_reported_df <- str_remove(self_reported_df, "_")
+        self_reported_df <- str_remove(self_reported_df, " ")
+    }
+    dx_sr <- map(self_reported_df, get_self_reported_table, ukb_data, cancer) %>%
       reduce(left_join) %>%
       mutate(Total_Sums_Self_Reported = rowSums(select(., -eid))) %>%
       mutate(Presence_of_Self_Reported_Dx = case_when(Total_Sums_Self_Reported > 0 ~ 1, Total_Sums_Self_Reported < 1 ~ 0))
+    SR <- TRUE
   } else {
+    print("Self Reported stats not requested")
     dx_sr = data.frame(eid = ukb_data$eid, Total_Sums_Self_Reported = 0)
+    SR <- FALSE
   }
   
   if (length(COD) > 0) {
@@ -44,8 +68,10 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
       reduce(left_join) %>%
       mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid))) %>%
       mutate(Presence_of_Cause_of_Death_DX = case_when(Total_Sums_Cause_of_Death > 0 ~ 1, Total_Sums_Cause_of_Death < 1 ~ 0))
+    COD <- TRUE
   } else {
     dx_cod = data.frame(eid = ukb_data$eid, Total_Sums_Cause_of_Death = 0)
+    COD <- FALSE
     
   }
   
@@ -54,6 +80,12 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
     mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death))) %>%
     mutate(Presence_of_Any_Requested_DX = case_when(Sum_of_All_Diagnoses > 0 ~ 1, Sum_of_All_Diagnoses < 1 ~ 0)) %>%
     select(-Sum_of_All_Diagnoses, -Total_Sums_Cause_of_Death, -Total_Sums_Self_Reported)
+    if (ICD9 == FALSE) {
+       history_df <- history_df %>% select(-Total_Sums_Icd9)
+   }
+   if (ICD10 == FALSE) {
+       history_df <- history_df %>% select(-Total_Sums_Icd10)
+   }
   
   history_df
 }
