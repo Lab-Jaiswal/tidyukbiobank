@@ -3,16 +3,15 @@
 #' 
 #' @param disease diagnosis of interest (string or code)
 #' @param ukb_data the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)
+#' @param cancer
 #' @keywords self reported counts
 #' @export
 #' @examples
 #' self_reported_counts()
 
-self_reported_counts <- function(disease, dataframe) {
-  
-  coding <- parse_get_SR_table_input(disease) 
-  
-  SR_eids <- get_self_reported_eids(coding, dataframe) 
+self_reported_counts <- function(disease, dataframe, cancer) {
+  coding <- parse_get_SR_table_input(disease, cancer) 
+  SR_eids <- get_self_reported_eids(coding, dataframe, cancer) 
   SR_sex <- filter(dataframe, is_in(eid, SR_eids)) %>% select(genetic_sex_f22001_0_0, eid)
   SR_Female_count <- filter(SR_sex, genetic_sex_f22001_0_0 == 0) %>% select(eid) %>% unique() %>% nrow()
   SR_Male_count <- filter(SR_sex, genetic_sex_f22001_0_0 == 1) %>% select(eid) %>% unique() %>% nrow()
