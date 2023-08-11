@@ -43,3 +43,4 @@ dx_demographics <- function(icd_list, dataframe, ...){
   final_stats_df <- bind_rows(icd_stats, sr_stats, cod_stats)
   final_stats_df
 }
+}
