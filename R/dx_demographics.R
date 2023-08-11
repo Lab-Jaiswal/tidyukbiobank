@@ -27,9 +27,10 @@ dx_demographics <- function(icd_list, dataframe, ...){
         self_reported_df <- str_remove(self_reported_df, " ")
     }
     sr_stats <- self_reported_counts(self_reported_df, dataframe, cancer) %>% mutate(dx_codes = paste("Self_Reported_", arguments$self_reported )) 
-  } else { 
+    } else { 
     sr_stats = data.frame() 
-  }
+    }
+  
   if (length(arguments$cause_of_death) > 0) {
     cod_stats <- cause_of_death_counts(arguments$cause_of_death, dataframe) %>% mutate(dx_codes = paste("Cause_of_Death_Included_", arguments$cause_of_death)) 
   } else {
@@ -38,9 +39,4 @@ dx_demographics <- function(icd_list, dataframe, ...){
   
   final_stats_df <- bind_rows(icd_stats, sr_stats, cod_stats)
   final_stats_df
-}
-  
-  final_stats_df <- bind_rows(icd_stats, sr_stats, cod_stats)
-  final_stats_df
-}
 }
