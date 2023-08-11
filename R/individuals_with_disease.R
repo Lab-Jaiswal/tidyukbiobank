@@ -29,13 +29,21 @@ individuals_with_disease <- function(icd_list, ukb_data, ...) {
   
   if (length(arguments$cause_of_death) > 0){
     indiv_with_disease_COD <- map(arguments$cause_of_death, get_cause_of_death_eids, ukb_data) %>% flatten() %>% unlist() %>% unique()
-    } else {
+  } else {
     indiv_with_disease_COD = NA
     }
 
   if(length(arguments$self_reported) > 0){
-    self_reported_df <- arguments$self_reported_df
-    indiv_with_disease_SR <- map(arguments$self_reported, get_self_reported_eids, ukb_data) %>% flatten() %>% unlist() %>% unique()
+    self_reported_df <- arguments$self_reported
+    print(arguments$self_reported)
+    cancer <- str_detect(self_reported_df, "cancer")
+    print(cancer)
+    if (cancer == TRUE) {
+        self_reported_df <- str_remove(self_reported_df, "cancer")
+        self_reported_df <- str_remove(self_reported_df, "_")
+        self_reported_df <- str_remove(self_reported_df, " ")
+    }
+    indiv_with_disease_SR <- map(self_reported_df, get_self_reported_eids, ukb_data, cancer) %>% flatten() %>% unlist() %>% unique()
     } else {
     indiv_with_disease_SR = NA
     }
