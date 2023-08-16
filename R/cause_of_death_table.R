@@ -6,9 +6,9 @@
 #' @keywords get cause of death table
 #' @export
 #' @examples
-#' get_cause_of_death_table()
+#' cause_of_death_table()
 
-get_cause_of_death_table <- function(description, ukb_data){
+cause_of_death_table <- function(description, ukb_data){
   COD_eids <- get_cause_of_death_eids(description, ukb_data)
   COD_description <- get_cause_of_death_description(description, ukb_data)
 
