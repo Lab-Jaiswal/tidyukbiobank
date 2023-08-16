@@ -23,4 +23,5 @@ dx_age <- function(icd_list, disease_name, dataframe){
   first_dx_date_with_DOB[, str_c("Age_at_first_", disease_name, "_dx")] <- interval(start= first_dx_date_with_DOB$DOB, end=first_dx_date_with_DOB$diagnosis_date)/                  
     duration(n=1, unit="years")
   first_dx_date_with_age <- select(first_dx_date_with_DOB, -DOB, -Date_of_first_X_dx, -diagnosis_date)
+  first_dx_date_with_age
 }
