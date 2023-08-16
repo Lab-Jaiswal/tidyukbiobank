@@ -44,9 +44,7 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
  
   if (length(SR) > 0) {
     self_reported_df <- arguments$self_reported
-    print(arguments$self_reported)
     cancer <- str_detect(self_reported_df, "cancer")
-    print(cancer)
     if (cancer == TRUE) {
         self_reported_df <- str_remove(self_reported_df, "cancer")
         self_reported_df <- str_remove(self_reported_df, "_")
