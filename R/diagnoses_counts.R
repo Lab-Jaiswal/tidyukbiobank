@@ -6,9 +6,9 @@
 #' @keywords dx demographics
 #' @export
 #' @examples
-#' dx_demographics()
+#' diagnoses_counts()
 
-dx_demographics <- function(icd_list, dataframe, ...){
+diagnoses_counts <- function(icd_list, dataframe, ...){
   arguments <- list(...)
   if (length(icd_list) >= 1){
      icd_list_additional <- c(icd_list, list(icd_list))
