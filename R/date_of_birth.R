@@ -14,5 +14,6 @@ date_of_birth <- function(dataframe) {
   birth[,"DOB"] <- ymd(birth$DOB_numeric)
   
   Date_of_birth<-select(birth, eid, DOB)
+  Date_of_birth
   
 }
