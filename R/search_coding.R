@@ -11,14 +11,14 @@
 
 search_coding <- function(element, cancer){
   if (cancer != TRUE) {
-    self_reported_df_loc <- system.file("extdata", "self_reported_df", package = "tidyUkBioBank")
+    self_reported_df_loc <- system.file("extdata", "coding6.rds", package = "tidyUkBioBank")
     self_reported_df <- read_rds(self_reported_df_loc)
     element <- tolower(element)
     relevant_code <- filter(self_reported_df, str_detect(coding, element))
     relevant_code
   } else {
-    self_reported_df_loc <- system.file("extdata", "self_reported_cancer", package = "tidyUkBioBank")
-    self_reported_df <- read_tsv(self_reported_df_loc)
+    self_reported_df_loc <- system.file("extdata", "coding3.rds", package = "tidyUkBioBank")
+    self_reported_df <- read_rds(self_reported_df_loc)
     element <- tolower(element)
     relevant_code <- filter(self_reported_df, str_detect(coding, element))
     relevant_code
