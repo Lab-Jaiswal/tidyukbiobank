@@ -66,7 +66,7 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
   if (length(COD) > 0) {
     dx_cod <- map(arguments$cause_of_death, get_cause_of_death_table, ukb_data) %>%
       reduce(left_join) %>%
-      mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid))) %>%
+      mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid, -description_of_cause_of_death_f40010_0_0))) %>%
       mutate(Presence_of_Cause_of_Death_DX = case_when(Total_Sums_Cause_of_Death > 0 ~ 1, Total_Sums_Cause_of_Death < 1 ~ 0))
     COD <- TRUE
   } else {
