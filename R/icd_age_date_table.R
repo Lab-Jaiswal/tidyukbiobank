@@ -7,9 +7,9 @@
 #' @keywords ukb_info
 #' @export
 #' @examples
-#' ukb_info()
+#' icd_age_date_table()
 
-ukb_info <- function(icd_list, dataframe, disease_name) {
+icd_age_date_table <- function(icd_list, dataframe, disease_name) {
   indiv_with_disease <- individuals_with_disease(icd_list, dataframe)
   dx_positive<- filter(dataframe, is_in(eid, indiv_with_disease[[1]]))   
   
