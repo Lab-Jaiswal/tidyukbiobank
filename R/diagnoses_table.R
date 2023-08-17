@@ -57,7 +57,7 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
     SR <- TRUE
   } else {
     print("Self Reported stats not requested")
-    dx_sr = data.frame(eid = ukb_data$eid, Presence_of_Self_Reported_DX = 0)
+    dx_sr = data.frame(eid = ukb_data$eid, Presence_of_Self_Reported_DX = 0, Total_Sums_Self_Reported = 0)
     SR <- FALSE
   }
   
@@ -68,7 +68,7 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
       mutate(Presence_of_Cause_of_Death_DX = case_when(Total_Sums_Cause_of_Death > 0 ~ 1, Total_Sums_Cause_of_Death < 1 ~ 0))
     COD <- TRUE
   } else {
-    dx_cod = data.frame(eid = ukb_data$eid, Presence_of_Cause_of_Death_DX = 0, description_of_cause_of_death_f40010_0_0 = NA)
+    dx_cod = data.frame(eid = ukb_data$eid, Presence_of_Cause_of_Death_DX = 0, description_of_cause_of_death_f40010_0_0 = NA, Total_Sums_Cause_of_Death = 0)
     COD <- FALSE
     
   }
