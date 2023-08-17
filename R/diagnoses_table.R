@@ -75,7 +75,7 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
   
   df_list <- list(dx_df_icd10, dx_df_icd9, dx_sr, dx_cod)
   history_df <- df_list %>% reduce(left_join) %>% 
-    mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death))) %>%
+    mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death, -description_of_cause_of_death_f40010_0_0))) %>%
     mutate(Presence_of_Any_Requested_DX = case_when(Sum_of_All_Diagnoses > 0 ~ 1, Sum_of_All_Diagnoses < 1 ~ 0)) %>%
     select(-Sum_of_All_Diagnoses, -Total_Sums_Cause_of_Death, -Total_Sums_Self_Reported)
     if (ICD9 == FALSE) {
