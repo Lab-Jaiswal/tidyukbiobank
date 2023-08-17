@@ -9,8 +9,13 @@
 #' @examples
 #' get_self_reported_eids()
 
-get_self_reported_eids <- function(diagnosis, ukb_data, cancer){
-  coding <- parse_get_SR_table_input(diagnosis, cancer) 
+get_self_reported_eids <- function(diagnosis, ukb_data, cancer, ...){
+  arguments <- list(...)
+  if(length(arguments$called) > 0) {
+    coding <- diagnosis
+  } else {
+      coding <- parse_get_SR_table_input(diagnosis, cancer) 
+  }
   if (cancer == FALSE) { 
     self_report <- select(ukb_data, eid, contains("noncancer_illness_code_selfreported"))
     diagnosis_long <- pivot_longer(self_report, -eid, names_to = "Diagnosis_Column", values_to = "diagnosis") %>% filter(!is.na(diagnosis))
