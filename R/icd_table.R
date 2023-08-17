@@ -30,9 +30,7 @@ icd_table <- function(icd_list, dataframe, disease_name) {
   dx_negative <- data.frame(eid = dx_negative, age_negative = NA, date_negative = NA, hx_negative = NA)
   colnames(dx_negative) <- c("eid", age_negative, date_negative, hx_negative)
   
-  combined <- bind_rows(hx_date_age_final, dx_negative)
-  eid_sex <- dataframe %>% select("eid", "genetic_sex_f22001_0_0")
-  final <- left_join(combined, eid_sex)
+  final <- bind_rows(hx_date_age_final, dx_negative)
   final
   
 }
