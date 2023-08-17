@@ -7,9 +7,9 @@
 #' @keywords ukb_info
 #' @export
 #' @examples
-#' icd_age_date_table()
+#' icd_table()
 
-icd_age_date_table <- function(icd_list, dataframe, disease_name) {
+icd_table <- function(icd_list, dataframe, disease_name) {
   indiv_with_disease <- individuals_with_disease(icd_list, dataframe)
   dx_positive<- filter(dataframe, is_in(eid, indiv_with_disease[[1]]))   
   
@@ -21,7 +21,16 @@ icd_age_date_table <- function(icd_list, dataframe, disease_name) {
   
   date_age <- left_join(date_dx, age_dx) 
   hx_date_age <- left_join(date_age, hx_dx)
-  final  <- hx_date_age[,colSums(is.na(hx_date_age))<nrow(hx_date_age)]
+  hx_date_age_final  <- hx_date_age[,colSums(is.na(hx_date_age))<nrow(hx_date_age)]
+
+  dx_negative <- filter(dataframe, !is_in(eid, indiv_with_disease[[1]])) %>% pull(eid)
+  age_negative <- str_c("Age_at_first_", disease_name, "_dx")
+  date_negative <- str_c("Date_of_first_", disease_name, "_dx")
+  hx_negative <- str_c("Hx_of_", disease_name)
+  dx_negative <- data.frame(eid = dx_negative, age_negative = NA, date_negative = NA, hx_negative = NA)
+  colnames(dx_negative) <- c("eid", age_negative, date_negative, hx_negative)
+  
+  final <- bind_rows(hx_date_age_final, dx_negative)
   final
   
 }

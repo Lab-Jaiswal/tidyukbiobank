@@ -6,9 +6,9 @@
 #' @keywords sex_age_stats
 #' @export
 #' @examples
-#' icd_sex_age_counts()
+#' icd_counts()
 
-icd_sex_age_counts <- function(list_icd, dataframe){
+icd_counts <- function(list_icd, dataframe){
   indiv_with_disease <- individuals_with_disease(list_icd, dataframe)
   sex_df <- filter(dataframe, is_in(eid, indiv_with_disease[[1]])) %>% select(genetic_sex_f22001_0_0)
   
