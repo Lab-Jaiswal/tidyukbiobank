@@ -2,7 +2,7 @@
 #' Function output: a table with an eid columns, columns pertaining to specific icd/ self reported/ cause of death codes, and a column for all previously mentioned disease indicators (combined) 
 #' The columns with disease indicators contain 1's and 0's to represent whether the eid has the icd code, etc. of interest (1) or not (0)
 #' 
-#' @param icd_list list of icd codes
+#' @param icd_codes optional. list of icd codes
 #' @param ukb_data the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)
 #' @param self_reported optional. if the user requests self reported diagnoses, then type self_reported = sr_list, where sr_list contains the self_reported codes of interest
 #' @param cause_of_death optional. if the user requests cause_of_death diagnoses, then type cause_of_death = cod_list, where cod_list contains the cause of death of interest
@@ -11,35 +11,45 @@
 #' @examples
 #' diagnoses_table()
 
-diagnoses_table <- function(icd_list, ukb_data, ...) {
+diagnoses_table <- function(ukb_data, ...) {
   arguments <- list(...)
   SR <- arguments$self_reported
   COD <- arguments$cause_of_death
-  
-  icd10_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE)
-  icd9_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE, invert=TRUE)
-  
-  if (length(icd10_list) > 0){
-    dx_df_icd10 <- map2(icd10_list, icd10_list, dx_hx, ukb_data) %>%
-    reduce(left_join) %>%
-    mutate(Total_Sums_Icd10 = rowSums(select(., -eid))) %>%
-    mutate(Presence_of_Icd10_dx = case_when(Total_Sums_Icd10 > 0 ~ 1, Total_Sums_Icd10 < 1 ~ 0))
-    ICD10 <- TRUE
-  } else {
-      dx_df_icd10 = data.frame(eid = ukb_data$eid, Total_Sums_Icd10 = 0)
-      ICD10 <- FALSE
+  icd_list <- arguments$icd_code_list
 
-  }
-
-  if (length(icd9_list) > 0) {
-    dx_df_icd9 <- map2(icd9_list, icd9_list, dx_hx, ukb_data) %>%
-    reduce(left_join) %>%
-    mutate(Total_Sums_Icd9 = rowSums(select(., -eid))) %>%
-    mutate(Presence_of_Icd9_dx = case_when(Total_Sums_Icd9 > 0 ~ 1, Total_Sums_Icd9 < 1 ~ 0))
-    ICD9 <- TRUE
-  } else {
+  if (length(icd_list) > 0) {
+  
+    icd10_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE)
+    icd9_list <- grep("([A-Za-z].*[0-9])|[0-9].*[A-Za-z].*[0-9]", icd_list, value = TRUE, invert=TRUE)
+    
+    if (length(icd10_list) > 0){
+      dx_df_icd10 <- map2(icd10_list, icd10_list, dx_hx, ukb_data) %>%
+      reduce(left_join) %>%
+      mutate(Total_Sums_Icd10 = rowSums(select(., -eid))) %>%
+      mutate(Presence_of_Icd10_dx = case_when(Total_Sums_Icd10 > 0 ~ 1, Total_Sums_Icd10 < 1 ~ 0))
+      ICD10 <- TRUE
+    } else {
+        dx_df_icd10 = data.frame(eid = ukb_data$eid, Total_Sums_Icd10 = 0)
+        ICD10 <- FALSE
+  
+    }
+  
+    if (length(icd9_list) > 0) {
+      dx_df_icd9 <- map2(icd9_list, icd9_list, dx_hx, ukb_data) %>%
+      reduce(left_join) %>%
+      mutate(Total_Sums_Icd9 = rowSums(select(., -eid))) %>%
+      mutate(Presence_of_Icd9_dx = case_when(Total_Sums_Icd9 > 0 ~ 1, Total_Sums_Icd9 < 1 ~ 0))
+      ICD9 <- TRUE
+    } else {
       dx_df_icd9 = data.frame(eid = ukb_data$eid, Total_Sums_Icd9 = 0)
       ICD9 <- FALSE
+    }
+  } else {
+       print("ICD code information not requested")
+       dx_df_icd9 = data.frame(eid = ukb_data$eid, Total_Sums_Icd9 = 0)
+       ICD9 <- FALSE
+       dx_df_icd10 = data.frame(eid = ukb_data$eid, Total_Sums_Icd10 = 0)
+       ICD10 <- FALSE
   }
  
   if (length(SR) > 0) {
