@@ -8,8 +8,9 @@
 #' @examples
 #' diagnoses_counts()
 
-diagnoses_counts <- function(icd_list, dataframe, ...){
+diagnoses_counts <- function(dataframe, ...){
   arguments <- list(...)
+  icd_list <- arguments$icd_code_list
   if (length(icd_list) >= 1){
      icd_list_additional <- c(icd_list, list(icd_list))
      icd_labels <- c(icd_list, "Combined_ICD_Codes")
