@@ -14,7 +14,7 @@ diagnoses_counts <- function(dataframe, ...){
   if (length(icd_list) >= 1){
      icd_list_additional <- c(icd_list, list(icd_list))
      icd_labels <- c(icd_list, "Combined_ICD_Codes")
-     icd_stats <- map(icd_list_additional, icd_sex_age_counts, dataframe) %>% do.call(rbind, .) %>% mutate(dx_codes = icd_labels) 
+     icd_stats <- map(icd_list_additional, icd_counts, dataframe) %>% do.call(rbind, .) %>% mutate(dx_codes = icd_labels) 
   } else {
     icd_stats = data.frame()
   }
