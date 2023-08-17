@@ -8,9 +8,9 @@
 #' @keywords get self reported table
 #' @export
 #' @examples
-#' get_self_reported_table()
+#' self_reported_table()
 
-get_self_reported_table <- function(diagnosis, ukb_data, cancer){
+self_reported_table <- function(diagnosis, ukb_data, cancer){
   coding <- parse_get_SR_table_input(diagnosis, cancer) 
 
   if (cancer == TRUE){

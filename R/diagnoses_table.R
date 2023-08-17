@@ -44,40 +44,38 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
  
   if (length(SR) > 0) {
     self_reported_df <- arguments$self_reported
-    print(arguments$self_reported)
     cancer <- str_detect(self_reported_df, "cancer")
-    print(cancer)
     if (cancer == TRUE) {
         self_reported_df <- str_remove(self_reported_df, "cancer")
         self_reported_df <- str_remove(self_reported_df, "_")
         self_reported_df <- str_remove(self_reported_df, " ")
     }
-    dx_sr <- map(self_reported_df, get_self_reported_table, ukb_data, cancer) %>%
+    dx_sr <- map(self_reported_df, self_reported_table, ukb_data, cancer) %>%
       reduce(left_join) %>%
       mutate(Total_Sums_Self_Reported = rowSums(select(., -eid))) %>%
-      mutate(Presence_of_Self_Reported_Dx = case_when(Total_Sums_Self_Reported > 0 ~ 1, Total_Sums_Self_Reported < 1 ~ 0))
+      mutate(Presence_of_Self_Reported_DX = case_when(Total_Sums_Self_Reported > 0 ~ 1, Total_Sums_Self_Reported < 1 ~ 0))
     SR <- TRUE
   } else {
     print("Self Reported stats not requested")
-    dx_sr = data.frame(eid = ukb_data$eid, Total_Sums_Self_Reported = 0)
+    dx_sr = data.frame(eid = ukb_data$eid, Presence_of_Self_Reported_DX = 0, Total_Sums_Self_Reported = 0)
     SR <- FALSE
   }
   
   if (length(COD) > 0) {
-    dx_cod <- map(arguments$cause_of_death, get_cause_of_death_table, ukb_data) %>%
+    dx_cod <- map(arguments$cause_of_death, cause_of_death_table, ukb_data) %>%
       reduce(left_join) %>%
-      mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid))) %>%
+      mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid, -description_of_cause_of_death_f40010_0_0))) %>%
       mutate(Presence_of_Cause_of_Death_DX = case_when(Total_Sums_Cause_of_Death > 0 ~ 1, Total_Sums_Cause_of_Death < 1 ~ 0))
     COD <- TRUE
   } else {
-    dx_cod = data.frame(eid = ukb_data$eid, Total_Sums_Cause_of_Death = 0)
+    dx_cod = data.frame(eid = ukb_data$eid, Presence_of_Cause_of_Death_DX = 0, description_of_cause_of_death_f40010_0_0 = NA, Total_Sums_Cause_of_Death = 0)
     COD <- FALSE
     
   }
   
   df_list <- list(dx_df_icd10, dx_df_icd9, dx_sr, dx_cod)
   history_df <- df_list %>% reduce(left_join) %>% 
-    mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death))) %>%
+    mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death, -description_of_cause_of_death_f40010_0_0))) %>%
     mutate(Presence_of_Any_Requested_DX = case_when(Sum_of_All_Diagnoses > 0 ~ 1, Sum_of_All_Diagnoses < 1 ~ 0)) %>%
     select(-Sum_of_All_Diagnoses, -Total_Sums_Cause_of_Death, -Total_Sums_Self_Reported)
     if (ICD9 == FALSE) {
@@ -86,6 +84,12 @@ diagnoses_table <- function(icd_list, ukb_data, ...) {
    if (ICD10 == FALSE) {
        history_df <- history_df %>% select(-Total_Sums_Icd10)
    }
+  if (SR == FALSE) {
+      history_df <- history_df %>% select(-Presence_of_Self_Reported_DX)  
+  }
+  if (COD == FALSE) {
+      history_df <- history_df %>% select(-Presence_of_Cause_of_Death_DX, -description_of_cause_of_death_f40010_0_0)
+  }
   
   history_df
 }
