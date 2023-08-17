@@ -7,9 +7,9 @@
 #' @keywords ukb_info
 #' @export
 #' @examples
-#' icd_age_date_table()
+#' icd_table()
 
-icd_age_date_table <- function(icd_list, dataframe, disease_name) {
+icd_table <- function(icd_list, dataframe, disease_name) {
   indiv_with_disease <- individuals_with_disease(icd_list, dataframe)
   dx_positive<- filter(dataframe, is_in(eid, indiv_with_disease[[1]]))   
   
@@ -30,7 +30,9 @@ icd_age_date_table <- function(icd_list, dataframe, disease_name) {
   dx_negative <- data.frame(eid = dx_negative, age_negative = NA, date_negative = NA, hx_negative = NA)
   colnames(dx_negative) <- c("eid", age_negative, date_negative, hx_negative)
   
-  final <- bind_rows(hx_date_age_final, dx_negative)
+  combined <- bind_rows(hx_date_age_final, dx_negative)
+  eid_sex <- dataframe %>% select("eid", "genetic_sex_f22001_0_0")
+  final <- left_join(combined, eid_sex)
   final
   
 }
