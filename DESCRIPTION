@@ -12,4 +12,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     tidyverse (>= 2.0.0),
-    lubridate (>= 1.9.2)
+    lubridate (>= 1.9.2),
+    magrittr (>= 2.0.3)
