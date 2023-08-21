@@ -73,12 +73,17 @@ diagnoses_table <- function(ukb_data, ...) {
   
   if (length(COD) > 0) {
     dx_df_cod <- map2(COD, COD, dx_cod, ukb_data) %>%
-      reduce(left_join) %>%
-      mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid))) %>%
+      reduce(left_join)
+    cod_colnames <- colnames(dx_df_cod)
+    cod_colnames <- cod_colnames[-1] 
+    cod_colnames <- paste("COD", cod_colnames, sep="_")
+    cod_colnames <- c("eid", cod_colnames)
+    colnames(dx_df_cod) <- cod_colnames
+    dx_df_cod <- dx_df_cod %>%  mutate(Total_Sums_Cause_of_Death = rowSums(select(., -eid))) %>%
       mutate(Presence_of_Cause_of_Death_DX = case_when(Total_Sums_Cause_of_Death > 0 ~ 1, Total_Sums_Cause_of_Death < 1 ~ 0))
     COD <- TRUE
   } else {
-    dx_df_cod = data.frame(eid = ukb_data$eid, Presence_of_Cause_of_Death_DX = 0, description_of_cause_of_death_f40010_0_0 = NA, Total_Sums_Cause_of_Death = 0)
+    dx_df_cod = data.frame(eid = ukb_data$eid, Presence_of_Cause_of_Death_DX = 0, Total_Sums_Cause_of_Death = 0)
     COD <- FALSE
     
   }
