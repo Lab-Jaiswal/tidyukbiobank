@@ -11,6 +11,8 @@ get_cause_of_death_table(description, ukb_data)
 \item{description}{diagnosis of interest (string)}
 
 \item{ukb_data}{the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)}
+
+\item{disease_name}{string_with_disease_name}
 }
 \description{
 A tidyUkBioBank function
