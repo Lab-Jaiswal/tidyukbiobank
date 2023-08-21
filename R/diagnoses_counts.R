@@ -11,6 +11,7 @@
 diagnoses_counts <- function(dataframe, ...){
   arguments <- list(...)
   icd_list <- arguments$icd_code_list
+  COD <- arguments$cause_of_death
   if (length(icd_list) >= 1){
      icd_list_additional <- c(icd_list, list(icd_list))
      icd_labels <- c(icd_list, "Combined_ICD_Codes")
@@ -32,8 +33,11 @@ diagnoses_counts <- function(dataframe, ...){
     sr_stats = data.frame() 
     }
   
-  if (length(arguments$cause_of_death) > 0) {
-    cod_stats <- cause_of_death_counts(arguments$cause_of_death, dataframe) %>% mutate(dx_codes = paste("Cause_of_Death_Included_", arguments$cause_of_death)) 
+  if (length(COD) > 0) {
+    cod_list_additional <- c(COD, list(COD))
+    COD <- paste("COD", COD, sep="_")
+    cod_labels <- c(COD, "Combined_COD_Codes")
+    cod_stats <- map(cod_list_additional, cause_of_death_counts, dataframe) %>% do.call(rbind, .) %>% mutate(dx_codes = cod_labels)
   } else {
     cod_stats = data.frame() 
   }

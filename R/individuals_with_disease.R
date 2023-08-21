@@ -21,7 +21,7 @@ individuals_with_disease <- function(icd_list, ukb_data, ...) {
     }
   
   if (length(icd10_list) > 0) {
-    icd10_cols <- c("eid","diagnoses_icd10", "diagnoses_secondary_icd10", "underlying_primary_cause_of_death", "contributory_secondary_ca_", "cancer_icd10")
+    icd10_cols <- c("eid","diagnoses_icd10", "diagnoses_secondary_icd10", "cancer_icd10")
     indiv_with_disease_icd10 <- search_icd_codes(icd10_cols, icd10_list, ukb_data)
     } else {
     indiv_with_disease_icd10 = NA
