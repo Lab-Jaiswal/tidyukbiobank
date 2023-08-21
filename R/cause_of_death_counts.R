@@ -8,8 +8,8 @@
 #' @examples
 #' cause_of_death_counts()
 
-cause_of_death_counts <- function(description, dataframe) {
-  COD_eids <- get_cause_of_death_eids(description, dataframe)
+cause_of_death_counts <- function(icd_list, dataframe) {
+  COD_eids <- get_cause_of_death_eids(icd_list, dataframe)
   COD_sex <- filter(dataframe, is_in(eid, COD_eids)) %>% select(genetic_sex_f22001_0_0, eid)
   COD_Female_count <- filter(COD_sex, genetic_sex_f22001_0_0 == 0) %>% select(eid) %>% unique() %>% nrow()
   COD_Male_count <- filter(COD_sex, genetic_sex_f22001_0_0 == 1) %>% select(eid) %>% unique() %>% nrow()
