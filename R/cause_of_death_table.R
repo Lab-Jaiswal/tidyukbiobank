@@ -3,6 +3,7 @@
 #' 
 #' @param description diagnosis of interest (string)
 #' @param ukb_data the originial phenotype dataframe containing all individuals in the ukbiobank (~500,000 cols x 18,000 rows as of 09/07/2021)
+#' @param disease_name string with disease name
 #' @keywords get cause of death table
 #' @export
 #' @examples
