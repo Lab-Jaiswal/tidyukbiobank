@@ -8,8 +8,9 @@
 #' @examples
 #' get_cause_of_death_description()
 
-get_cause_of_death_description <- function(description, ukb_data){
-  COD <- select(ukb_data, eid, contains("description_of_cause_of_death"))
-  COD_filtered <- filter(COD, str_detect(description_of_cause_of_death_f40010_0_0, description))
-  COD_filtered
+get_cause_of_death_description <- function(icd_list, ukb_data){
+  COD_eid <- get_cause_of_death_eids(icd_list, ukb_data)
+  filtered_for_COD <- ukb_data %>% filter(eid %in% COD_eid)
+  COD_description <- select(filtered_for_COD, eid, contains("description_of_cause_of_death")) 
+  COD_description
 }
