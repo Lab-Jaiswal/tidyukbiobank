@@ -8,9 +8,9 @@
 #' @examples
 #' get_cause_of_death_eids()
 
-get_cause_of_death_eids <- function(description, ukb_data){
-  COD <- select(ukb_data, eid, contains("description_of_cause_of_death"))
-  COD_filtered <- filter(COD, str_detect(description_of_cause_of_death_f40010_0_0, description))
-  COD_eid <- COD_filtered$eid
+get_cause_of_death_eids <- function(icd_list, ukb_data){
+  ukb_data_subset <- select(ukb_data, contains(c("eid", "underlying_primary_cause_of_death", "contributory_secondary_ca_")))
+  ukb_data_filtered <- ukb_data_subset %>% filter_all(any_vars(. %in% icd_list)) %>% as_tibble()
+  COD_eid <- ukb_data_filtered$eid
   COD_eid
 }
