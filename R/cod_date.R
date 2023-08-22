@@ -13,11 +13,6 @@ cod_date <- function(icd_list, disease_name, dataframe){
   dx_cod_list <- dx_cod(icd_list, disease_name, dataframe) %>% filter(!!sym(column_name) == 1) %>% pull(eid)
   dataframe_positive <- dataframe %>% filter(eid %in% dx_cod_list)
   
-  get_first_date <- function(diagnosis_date_rows, diagnosis_date_group) {
-    first_diag <- arrange(diagnosis_date_rows, date_of_diagnosis) %>% slice(1)
-    select(first_diag, date_of_diagnosis)
-  }
-  
   first_DOD <- dataframe_positive %>% select(eid, date_of_death_f40000_0_0) %>% set_colnames(c("eid", "date_of_diagnosis"))
   second_DOD <- dataframe_positive %>% select(eid, date_of_death_f40000_1_0) %>% set_colnames(c("eid", "date_of_diagnosis"))
   
