@@ -15,7 +15,7 @@
 dx_date <- function(icd_list, disease_name, dataframe){
   indiv_with_disease <- individuals_with_disease(icd_list, dataframe)    
   
-  get_first__date <- function(diagnosis_date_rows, diagnosis_date_group) {
+  get_first_date <- function(diagnosis_date_rows, diagnosis_date_group) {
     first_diag <- arrange(diagnosis_date_rows, date_of_diagnosis) %>% slice(1)
     select(first_diag, date_of_diagnosis)
   }
@@ -73,7 +73,7 @@ dx_date <- function(icd_list, disease_name, dataframe){
   
   
   diagnosis_date <- bind_rows(diagnosis_date_icd10, diagnosis_date_icd9) %>% drop_na()
-  diagnosis_first_date <- group_by(diagnosis_date, eid) %>% group_modify(get_first__date)
+  diagnosis_first_date <- group_by(diagnosis_date, eid) %>% group_modify(get_first_date)
   names(diagnosis_first_date)[names(diagnosis_first_date) == "date_of_diagnosis"] <- str_c("Date_of_first_", disease_name, "_dx")
   column_name <- str_c("Date_of_first_", disease_name, "_dx")
   diagnosis_first_date_noncancer <- diagnosis_first_date
