@@ -36,7 +36,8 @@ dx_date <- function(icd_list, disease_name, dataframe){
     
     date_long[, 1]<- sapply(date_long[, 1], as.numeric)
     date_long <- select(date_long, -Date_Column)
-    diagnosis_date_icd9 <- left_join(diagnosis_long_filter, date_long) %>% select(-visit_num) } else {
+    diagnosis_date_icd9 <- left_join(diagnosis_long_filter, date_long) %>% select(-visit_num) 
+    } else {
       
       diagnosis_date_icd9  <- data.frame("eid" = NA, "diagnosis" = NA, "date_of_diagnosis" = NA)
     }
