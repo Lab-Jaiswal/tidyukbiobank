@@ -10,8 +10,8 @@
 #' @examples
 #' self_reported_table()
 
-self_reported_table <- function(diagnosis, ukb_data, cancer){
-  coding <- parse_get_SR_table_input(diagnosis, cancer) 
+self_reported_table <- function(diagnosis, disease_name, ukb_data, cancer){
+    coding <- parse_get_SR_table_input(diagnosis, cancer) 
 
   if (cancer == TRUE){
     self_report <- select(ukb_data, eid, contains("cancer_code_selfreported"))
@@ -29,5 +29,18 @@ self_reported_table <- function(diagnosis, ukb_data, cancer){
   without_SR$self_reported_col <- 0
   self_reporting_table <- bind_rows(without_SR, with_SR)
   colnames(self_reporting_table) <- c("eid", coding)
-  self_reporting_table
+
+  SR_age <- sr_age(diagnosis, disease_name, ukb_data, cancer)  
+  SR_date <- sr_date(diagnosis, disease_name, ukb_data, cancer)
+
+  SR_df_combined <- left_join(self_reporting_table, SR_date) %>% left_join(SR_age)
+
+  if (cancer == TRUE){
+    SR_diagnosis <- str_c("Self_Reported_Included_", diagnosis, "_cancer")
+  } else {
+    SR_diagnosis <- str_c("Self_Reported_Included_", diagnosis)
+  }
+    names(SR_df_combined)[names(SR_df_combined) == coding] <- SR_diagnosis
+
+  SR_df_combined     
 }
