@@ -25,8 +25,8 @@ get_stats_by_sex <- function(sex, dataframe){
     select(Age_at_first_DX_dx) %>%
     filter(!is.na(Age_at_first_DX_dx)) 
   
-  mean_age_combined <- mean(age_df$Age_at_first_DX_dx)
-  median_age_combined <- median(age_df$Age_at_first_DX_dx)
+  mean_age_combined <- mean(as.numeric(age_df$Age_at_first_DX_dx))
+  median_age_combined <- median(as.numeric(age_df$Age_at_first_DX_dx))
   total <- filtered_df %>% select(eid) %>% unique() %>% nrow()
   age_values <- c(mean_age_combined, median_age_combined, total)
   age_values
