@@ -60,7 +60,7 @@ diagnoses_table <- function(ukb_data, ...) {
         self_reported_df <- str_remove(self_reported_df, "_")
         self_reported_df <- str_remove(self_reported_df, " ")
     }
-    dx_sr <- map(self_reported_df, self_reported_table, ukb_data, cancer) %>%
+    dx_sr <- map2(self_reported_df, self_reported_df, dx_sr, ukb_data, cancer) %>%
       reduce(left_join) %>%
       mutate(Total_Sums_Self_Reported = rowSums(select(., -eid))) %>%
       mutate(Presence_of_Self_Reported_DX = case_when(Total_Sums_Self_Reported > 0 ~ 1, Total_Sums_Self_Reported < 1 ~ 0))
