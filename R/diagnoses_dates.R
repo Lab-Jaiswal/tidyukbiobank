@@ -14,7 +14,7 @@ diagnoses_dates <- function(dataframe, ...){
     
   if (length(icd_list) > 0 ){
     icd_list_additional <- c(icd_list, list(icd_list))
-    icd_labels <- c(icd_list, "First_Date_Dx_with_Combined_ICD_Codes")
+    icd_labels <- c(icd_list, "Combined_ICD_Codes")
     icd_dates <- map2(icd_list_additional, icd_labels, dx_date, dataframe)
     icd_dates <-  icd_dates[sapply(icd_dates, function(x) dim(x)[1]) > 0]
     icd_dates <- icd_dates %>% reduce(full_join)
@@ -24,7 +24,7 @@ diagnoses_dates <- function(dataframe, ...){
   
   if (length(COD) > 0){
     COD_additional <- c(COD, list(COD))
-    COD_labels <- c(COD, "First_Date_Dx_with_Combined_Codes")
+    COD_labels <- c(COD, "Combined_Codes")
     COD_labels <- paste(COD_labels, "_COD", sep="")
     COD_dates <- map2(COD_additional, COD_labels, cod_date, dataframe) 
     COD_dates <-  COD_dates[sapply(COD_dates, function(x) dim(x)[1]) > 0]
