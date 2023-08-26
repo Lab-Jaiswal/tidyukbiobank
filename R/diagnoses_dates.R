@@ -11,13 +11,12 @@ diagnoses_dates <- function(dataframe, ...){
   icd_list <- arguments$icd_code_list
   COD <- arguments$cause_of_death
   SR <- arguments$self_reported
-  
+    
   if (length(icd_list) > 0 ){
     icd_list_additional <- c(icd_list, list(icd_list))
     icd_labels <- c(icd_list, "First_Date_Dx_with_Combined_ICD_Codes")
     icd_dates <- map2(icd_list_additional, icd_labels, dx_date, dataframe)
     icd_dates <-  icd_dates[sapply(icd_dates, function(x) dim(x)[1]) > 0]
-    print("joining icd_dates")
     icd_dates <- icd_dates %>% reduce(full_join)
   } else {
     icd_dates = data.frame(eid = NA)
@@ -33,24 +32,23 @@ diagnoses_dates <- function(dataframe, ...){
   } else {
     COD_dates = data.frame(eid = NA)
   }
-  
+
   if (length(SR) >0){
     cancer <- str_detect(SR, "cancer")
     if (cancer == TRUE) {
-      SR <- str_remove(SR, "cancer")
-      SR <- str_remove(SR, "_")
-      SR <- str_remove(SR, " ")
+        SR <- str_remove(SR, "cancer")
+        SR <- str_remove(SR, "_")
+        SR <- str_remove(SR, " ")
     }
     SR_dates <- sr_date(SR, SR, dataframe, cancer)
   } else {
     SR_dates = data.frame(eid = NA)
   }
-  
+
   dates_df <- full_join(icd_dates, COD_dates) %>% full_join(SR_dates) %>% filter(!is.na(eid))
   dates_no_eid <- dates_df %>% ungroup %>% select(-eid)
   dates_no_eid$First_Date_Dx_with_All_Codes <- apply(dates_no_eid, 1, FUN = min, na.rm = TRUE)
   eid <- dates_df %>% select(eid)
-  print("joining eids and dates")
-  dates_df <- dates_df %>% bind_cols(eid, dates_no_eid) 
+  dates_df <- bind_cols(eid, dates_no_eid) 
   dates_df  
 }
