@@ -28,7 +28,7 @@ diagnoses_counts <- function(dataframe, ...){
         self_reported_df <- str_remove(self_reported_df, "_")
         self_reported_df <- str_remove(self_reported_df, " ")
     }
-    sr_stats <- self_reported_counts(self_reported_df, dataframe, cancer) %>% mutate(dx_codes = paste("Self_Reported_", arguments$self_reported )) 
+    sr_stats <- self_reported_counts(self_reported_df, dataframe, cancer) %>% mutate(dx_codes = paste("Self_Reported_", self_reported_df )) 
     } else { 
     sr_stats = data.frame() 
     }
