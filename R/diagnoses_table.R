@@ -92,12 +92,12 @@ diagnoses_table <- function(ukb_data, ...) {
   history_df <- df_list %>% reduce(left_join) %>% 
     mutate(Sum_of_All_Diagnoses = rowSums(select(., Total_Sums_Icd10, Total_Sums_Icd9, Total_Sums_Self_Reported, Total_Sums_Cause_of_Death))) %>%
     mutate(Presence_of_Any_Requested_DX = case_when(Sum_of_All_Diagnoses > 0 ~ 1, Sum_of_All_Diagnoses < 1 ~ 0)) %>%
-    select(-Sum_of_All_Diagnoses, -Total_Sums_Cause_of_Death, -Total_Sums_Self_Reported)
+    select(-Sum_of_All_Diagnoses, -Total_Sums_Cause_of_Death, -Total_Sums_Self_Reported, Total_Sums_Icd10, Total_Sums_Icd9)
     if (ICD9 == FALSE) {
-       history_df <- history_df %>% select(-Total_Sums_Icd9)
+       history_df <- history_df %>% select(-Presence_of_Icd9_dx)
    }
    if (ICD10 == FALSE) {
-       history_df <- history_df %>% select(-Total_Sums_Icd10)
+       history_df <- history_df %>% select(-Presence_of_Icd9_dx)
    }
   if (SR == FALSE) {
       history_df <- history_df %>% select(-Presence_of_Self_Reported_DX)  
