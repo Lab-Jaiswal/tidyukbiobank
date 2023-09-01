@@ -10,13 +10,13 @@
 
 search_meaning <- function(element, cancer){
     if (cancer != "TRUE"){
-        self_reported_df_loc <- system.file("extdata", "coding6.rds", package = "tidyUkBioBank")
+        self_reported_df_loc <- system.file("extdata", "coding6.rds", package = "tidyukbiobank")
         self_reported_df <- read_rds(self_reported_df_loc)
         element <- tolower(element)
         relevant_meaning <- filter(self_reported_df, str_detect(meaning, element))
         relevant_meaning
     } else {
-        self_reported_df_loc <- system.file("extdata", "coding3.rds", package = "tidyUkBioBank")
+        self_reported_df_loc <- system.file("extdata", "coding3.rds", package = "tidyukbiobank")
         self_reported_df <- read_rds(self_reported_df_loc)
         element <- tolower(element)
         relevant_meaning <- filter(self_reported_df, str_detect(meaning, element))
