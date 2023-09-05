@@ -52,7 +52,7 @@ Finally, this package allows you to define a diagnosis based on multiple sources
  3. Click "Launch"
  4. Call needed dependencies
     - library(tidyukbiobank)
-   - library(tidyverse)
+    - library(tidyverse)
     - library(lubridate)
     - library(magrittr)
  5. Download data
