@@ -18,9 +18,15 @@ This package also provides functions you can use to gain a broad understanding o
 Finally, this package allows you to define a diagnosis based on multiple sources of your choosing, such as:
 
 - icd10 code(s)
+  - fields : diagnoses_icd10_f41270 _0_0 - 0_222, diagnoses_main_icd10_f41202_0_0 - 0_74, diagnoses_secondary_icd10_f41204_0_0 - 0_183,  type_of_cancer_icd10_f40006_0_0 - 0_16, date_of_first_inpatient_diagnosis_icd10_f41280_0_0 - 0_222, date_of_cancer_diagnosis_f40005_0_0 - 0_16 
 - icd9 code(s)
+  - fields: diagnoses_icd9_f41271_0_0 - 0_46, diagnoses_secondary_icd9_f41205_0_0 - 0_29, diagnoses_main_icd9_f41203_0_0 - 0_27, type_of_cancer_icd9_f40013_0_0 - 0_14, date_of_first_inpatient_diagnosis_icd9_f41281_0_0 - 0_46, date_of_cancer_diagnosis_f40005_0_0 - 0_16 
 - cause of death reports
+  - description_cause_of_death_f40010_0_0, contributory_secondary_ca_f40002_0_0 - 1_14, underlying_primary_cause_of_death_f40001_0_0, date_of_death_f40000_0_0 - 1_0
 - self reports
+  - cancer_code_selfreported_f20001_0_0 - 3_5, noncancer_illness_code_selfreported_f20002_0_0 - 3_33, interpolated_age_of_participant_when_cancer_fist_diagnosed_f2007_0_0 - 3_33, interpolated_year_when_cancer_first_diagnosed_f20006_0_0 - 3_5, interpolated_age_of_participant_when_noncancer_illness_first_diagnosed_f20009_0_0 - 3_33, interpolated_year_when_noncancer_illness_first_diagnosed_f20008_0_0 - 3_5
+- date of birth
+  - fields: year_of_birth_f34_0_0, month_of_birth_f52_0_0
 
 ## Installation
 Install latest development version: `devtools::install_github("Lab-Jasiwal/tidyUkBioBank", dependencies = TRUE)`
