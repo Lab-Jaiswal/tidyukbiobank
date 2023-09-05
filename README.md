@@ -88,8 +88,36 @@ In R:
 § Additional thread on splitting the tab data: https://github.com/kenhanscombe/ukbtools/issues/1
 
 ## Functions
+There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5 of them:
+* parse_get_SR_table_input
+* diagnoses_table
+* diagnoses_counts
+* diagnoses_ages
+* diagnoses_dates
+  
+### parse_get_SR_table
+#### Arguments
+disease: 
+* string either from coding6/ coding3 OR 
+* string with a description of the disease of interest
+cancer: whether the diagnoses is a cancer diagnosis
+* TRUE or FALSE
+* For cancer diagnoses, put just the body part and then TRUE. For example: parse_get_SR_table_input("breast", TRUE)
 
-### Common Arguments
+#### Example
+
+### diagnoses_table(), diagnoses_counts(), diagnoses_ages(), diagnoses_dates()
+#### Arguments
+##### Mandatory: 
+* dataframe: name of the dataframe with the ukbb data
+##### Optional:
+* icd_code_list
+* cause_of_death
+* self_reported
+
+#### Example
+
+#### diagnoses_table
 
 Several of the functions below contain common arguments. They are:
 
@@ -100,45 +128,7 @@ Several of the functions below contain common arguments. They are:
 3. `disease_name`: The disease name you wish to call the cluster of icd codes by
 * Ex: "Depression"
 
-### dx_age(), dx_date(), dx_hx()
-
-Arguments:
-1. `icd_list`, `dataframe`, `disease_name`
-
-Output:
-All three functions contain similar outputs: tibbles with two columns, one of which is 'eid'. The second column is dependent on the function used: 
-* dx_age() outputs a column named `"Age_at_first_[disease_name]_dx"`, which contains the age at which the indivudal was first diagnosed with the disease(s) of interest. If an individual has not been diagnosed with the disease(s) of interest, the value in this column is NA.
-* dx_date() outputs a column named `"Date_of_first_[disease_name]_dx"`, which contains with the date at which the indivudal was first diagnosed with the disease(s) of interest. If an individual has not been diagnosed with the disease(s) of interest, the value in this column is NA.
-* dx_hx outputs a column named `"Hx_of_[disease_name]"` containing 1's and 0's. 1's indicate that the individual was diagnosed with the disease(s) of interest, while 0's indicate that the indivudal was not. 
-
-The resulting tibble can then be added to the original dataframe (or a subsetted dataframe of your choice) using dplyr's left_join (on = eid).
-
-### ukb_info()
-
-Arguments:                                                                                                                                           
-1-3. `icd_list`, `dataframe`, `disease_name`  
-4. `requested`: A string containing the columns requested.                                                                                              
-* Strings containing "date" will call the dx_date() function; "age", the dx_age() function; and, "hx", the  dx_hx() function.    
-5. `combined`: If `TRUE`, this indicated that you would like to recieve the requested column(s) joined to the entire phenotype dataframe (here ukb_data). If `FALSE`, this indicates that you would like to only recieve the tibbles outputted by the function indicated in `requested`
-
-
-### date_of_birth()
-
-Arguments: 
-1. `dataframe`
-
-Output:
-A tibble containing two columns: eid, and DOB, which contains the subject's date of birth in yyyy-mm-dd format. If desired, you can then append the DOB column to the original dataframe (or a subsetted dataframe of your choice) using dplyr's left_join (on = eid).
-
-### individuals_with_disease(), individuals_without_disease()
-
-Arguments:
-1. `icd_list`: A list of the icd10 codes you are interested in examining. 
-2. `dataframe`: The phenotype dataframe created using the ukb_df function
-
-Output: 
-individuals_with_disease(): A list of all individuals (identified by eid) that have been diagnosed with the icd_code(s) of interest. 
-individuals_without_disease(): A list of all individuals (identified by eid) that have not been diagnosed with the icd_code(s) of interest. 
+ 
 
 ## Citations
 Hanscombe KB, Coleman J, Traylor M, Lewis CM (e-print 158113). “ukbtools: An R package to manage and query UK Biobank data.” _bioRxiv_. <URL: https://doi.org/10.1101/158113>.
