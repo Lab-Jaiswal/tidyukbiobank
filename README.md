@@ -100,6 +100,7 @@ There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5
 *disease:* 
 * string either from coding6/ coding3 OR 
 * string with a description of the disease of interest
+  
 *cancer:* whether the diagnoses is a cancer diagnosis
 * TRUE or FALSE
 * For cancer diagnoses, put just the body part and then TRUE. For example: parse_get_SR_table_input("breast", TRUE)
