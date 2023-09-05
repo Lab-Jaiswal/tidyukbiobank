@@ -112,24 +112,32 @@ There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5
 * dataframe: name of the dataframe with the ukbb data
   
 *Optional:*
-* icd_code_list
-* cause_of_death
-* self_reported
+* icd_code_list: a list of icds the patient was dxd with during an inpt hospital stay
+* cause_of_death: a list of icds associated with the patient’s primary or secondary cause of death
+* self_reported: a code or string corresponding to either coding6 or codign3
 
 #### Example
 
 #### diagnoses_table
+Output: A table containing eids and columns filled with 1’s and 0’s for if the eid has a record of the icd, cod, or self diagnosed code.  
 
-Several of the functions below contain common arguments. They are:
+Example:
 
-1. `icd_list`: A list of the icd10 codes you are interested in examining. 
-* Ex: if you are interested in examining individuals diagnosed with Depression, you may create the following list of ICD10 codes:                     
-`icd_Depression <- c(F33.4, F32.8, F33, F33.1, F33.8, F32, F33.0, F33.9)`  
-2. `dataframe`: The phenotype dataframe created using the ukb_df() function
-3. `disease_name`: The disease name you wish to call the cluster of icd codes by
-* Ex: "Depression"
+#### diagnoses_counts
+Outputs: A counts table containing the count (female, male, and combined), % female, % male, mean and median age dxd (for females, males, and combined) for all codes provided
 
- 
+Example
+
+#### diagnoses_dates
+Output: A table containing the eids and date dxd for each icd/ cause of death/ self reported code given. If any are eids missing that show a 1 in using diagnoses_table, it is because no date of diagnoses was provided. 
+
+Example:
+
+#### diagnoses_ages
+Output: A table containing the eids and age dxd for each icd/ cause of death/ self reported code given.  If any are eids missing that show a 1 in using diagnoses_table, it is because no date of diagnoses was provided. 
+
+Example:
+
 
 ## Citations
 Hanscombe KB, Coleman J, Traylor M, Lewis CM (e-print 158113). “ukbtools: An R package to manage and query UK Biobank data.” _bioRxiv_. <URL: https://doi.org/10.1101/158113>.
