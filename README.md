@@ -110,6 +110,7 @@ There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5
 #### Arguments
 *Mandatory:* 
 * dataframe: name of the dataframe with the ukbb data
+  
 *Optional:*
 * icd_code_list
 * cause_of_death
