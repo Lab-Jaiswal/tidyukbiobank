@@ -28,8 +28,35 @@ Finally, this package allows you to define a diagnosis based on multiple sources
 - date of birth
   - fields: year_of_birth_f34_0_0, month_of_birth_f52_0_0
 
-## Installation
-Install latest development version: `devtools::install_github("Lab-Jasiwal/tidyUkBioBank", dependencies = TRUE)`
+## Installation and Data Download
+### Vim
+ 1. Start an srun session
+ 2. Srun -c 16 –mem 128G -t 8:00:00 -A default -p interactive –pty zsh
+ 3. Install and call package
+  - `devtools::install_github("Lab-Jasiwal/tidyUkBioBank", dependencies = TRUE)`
+  - library(tidyukbiobank)
+ 4. Call needed dependencies
+  - library(tidyverse)
+  - library(lubridate)
+  - library(magrittr)
+ 5. Download data
+  - ukb <- /path/to/data/ukb_phenotype_data_only_relevant_to_tidyukbiobank_Jul_20.rds
+
+### ondemand R Studio
+ 1. Go to R Studio Server
+  - https://ondemand.scg.stanford.edu/pun/sys/dashboard/batch_connect/sys/rstudio/session_contexts/new
+ 2. Select options:
+  - R Version: 4.2.2
+  - Number of cores: 16
+  - Amount of memory: 258
+ 3. Click "Launch"
+ 4. Call needed dependencies
+  - library(tidyukbiobank)
+  - library(tidyverse)
+  - library(lubridate)
+  - library(magrittr)
+ 5. Download data
+  - ukb <- /path/to/data/ukb_phenotype_data_only_relevant_to_tidyukbiobank_Jul_20.rds
 
 ## Prerequisites 
 ### Obtaining Phenotypic Data form the UKBioBank
