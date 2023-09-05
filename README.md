@@ -5,14 +5,13 @@ tidyUkBioBank is an R-based package that you to easily extract, subset, and pars
 To avoid repetitive calls for standard diagnostic and genetic variables, we created functions to output meaningful columns, such as:
 
 - History of a diagnosis
-- Age and date at which diagoses were made
-- Current patient age based on todays date
-- Genotype data
+- Age at which diagnoses were made
+- Dates at which diagnoses were made
 
 This package also provides functions you can use to gain a broad understanding of the prevalence of disorders of interest, such as:
 
 - The total number of participants with a diagnosis
-- The proportion of males and females afflicated with a certain diagnosis
+- The proportion of males and females afflicted with a certain diagnosis
 - The median and mean age patients were first diagnosed
 
 Finally, this package allows you to define a diagnosis based on multiple sources of your choosing, such as:
@@ -27,6 +26,8 @@ Finally, this package allows you to define a diagnosis based on multiple sources
   - cancer_code_selfreported_f20001_0_0 - 3_5, noncancer_illness_code_selfreported_f20002_0_0 - 3_33, interpolated_age_of_participant_when_cancer_fist_diagnosed_f2007_0_0 - 3_33, interpolated_year_when_cancer_first_diagnosed_f20006_0_0 - 3_5, interpolated_age_of_participant_when_noncancer_illness_first_diagnosed_f20009_0_0 - 3_33, interpolated_year_when_noncancer_illness_first_diagnosed_f20008_0_0 - 3_5
 - date of birth
   - fields: year_of_birth_f34_0_0, month_of_birth_f52_0_0
+- genetic sex
+  - genetic_sex_f22001_0_0
 
 ## Installation and Data Download
 ### Vim
