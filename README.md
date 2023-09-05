@@ -59,7 +59,7 @@ Finally, this package allows you to define a diagnosis based on multiple sources
     - ukb <- /path/to/data/ukb_phenotype_data_only_relevant_to_tidyukbiobank_Jul_20.rds
 
 ## Prerequisites 
-### Obtaining Phenotypic Data form the UKBioBank
+### Obtaining Phenotypic Data from the UKBioBank
 
  1. Make a UKB fileset                                                                                                                                   
         a. Download and decrypt your data from the Uk BioBank                                                                                           
