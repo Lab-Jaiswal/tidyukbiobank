@@ -171,7 +171,7 @@ Example:
 Output: A table containing the eids and age dxd for each icd/ cause of death/ self reported code given.  If any are eids missing that show a 1 in using diagnoses_table, it is because no date of diagnoses was provided. 
 
 Example:
-![alt text]([https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_ages.png))
+![Example](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_ages.png)
 
 
 ## Citations
