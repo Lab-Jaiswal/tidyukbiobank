@@ -97,10 +97,10 @@ There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5
   
 ### parse_get_SR_table
 #### Arguments
-disease: 
+*disease:* 
 * string either from coding6/ coding3 OR 
 * string with a description of the disease of interest
-cancer: whether the diagnoses is a cancer diagnosis
+*cancer:* whether the diagnoses is a cancer diagnosis
 * TRUE or FALSE
 * For cancer diagnoses, put just the body part and then TRUE. For example: parse_get_SR_table_input("breast", TRUE)
 
@@ -108,9 +108,9 @@ cancer: whether the diagnoses is a cancer diagnosis
 
 ### diagnoses_table(), diagnoses_counts(), diagnoses_ages(), diagnoses_dates()
 #### Arguments
-##### *Mandatory:* 
+*Mandatory:* 
 * dataframe: name of the dataframe with the ukbb data
-##### Optional:
+*Optional:*
 * icd_code_list
 * cause_of_death
 * self_reported
