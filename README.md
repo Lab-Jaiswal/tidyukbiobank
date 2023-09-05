@@ -183,7 +183,7 @@ Output: A table containing the eids and date dxd for each icd/ cause of death/ s
 
 Example:
 
-![Calling diagnoses_dates](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_dates.png)
+![Calling diagnoses_dates](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_daig_dates.png)
 ![Results of diagnoses_dates](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_dates.png)
 
 #### diagnoses_ages
