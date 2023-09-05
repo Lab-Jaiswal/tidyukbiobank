@@ -138,7 +138,9 @@ There are 29 functions in tidyukbiobank. Luckily, you only need to worry about 5
 * TRUE or FALSE
 * For cancer diagnoses, put just the body part and then TRUE. For example: parse_get_SR_table_input("breast", TRUE)
 
-#### Example
+Example:
+
+![Calling parse_get_SR_table](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/parse_get_SR_table.png)
 
 ### diagnoses_table(), diagnoses_counts(), diagnoses_ages(), diagnoses_dates()
 #### Arguments
@@ -157,15 +159,31 @@ Output: A table containing eids and columns filled with 1’s and 0’s for if t
 
 Example:
 
+![Calling diagnoses table](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_table.png)
+![Results of diagnoses_table](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_table.png)
+
 #### diagnoses_counts
 Outputs: A counts table containing the count (female, male, and combined), % female, % male, mean and median age dxd (for females, males, and combined) for all codes provided
 
-Example
+Example:
+
+![Calling diagnoses_ages](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_counts.png)
+![Results of diagnoses_ages](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_counts.png)
+
+Notice the following:
+1. The numbers associated with ICD codes L93-7100 do not add up to the numbers in Combined_ICD_Codes. This is to be expected since there are individuals who have obtained multiple ICD codes.
+2. In 6854, 7100, M321, M328, and M329 the Total column contains more people than the male and female columns combined. This is because there are approximately 14,000 people in the UK biobank with NA for genetic_sex_f22001_0_0
+
+![Genetic Sex](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/genetic_sex.png)
+
 
 #### diagnoses_dates
 Output: A table containing the eids and date dxd for each icd/ cause of death/ self reported code given. If any are eids missing that show a 1 in using diagnoses_table, it is because no date of diagnoses was provided. 
 
 Example:
+
+![Calling diagnoses_dates](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_dates.png)
+![Results of diagnoses_dates](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_dates.png)
 
 #### diagnoses_ages
 Output: A table containing the eids and age dxd for each icd/ cause of death/ self reported code given.  If any are eids missing that show a 1 in using diagnoses_table, it is because no date of diagnoses was provided. 
