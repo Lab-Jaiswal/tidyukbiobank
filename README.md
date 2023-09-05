@@ -161,6 +161,7 @@ Example:
 
 ![Calling diagnoses table](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/call_diag_table.png)
 ![Results of diagnoses_table](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_table.png)
+![Results of diagnoses_table colnames](https://github.com/Lab-Jaiswal/tidyukbiobank/blob/main/images/diag_table_colnames.png)
 
 #### diagnoses_counts
 Outputs: A counts table containing the count (female, male, and combined), % female, % male, mean and median age dxd (for females, males, and combined) for all codes provided
