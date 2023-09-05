@@ -108,7 +108,7 @@ cancer: whether the diagnoses is a cancer diagnosis
 
 ### diagnoses_table(), diagnoses_counts(), diagnoses_ages(), diagnoses_dates()
 #### Arguments
-##### Mandatory: 
+##### *Mandatory:* 
 * dataframe: name of the dataframe with the ukbb data
 ##### Optional:
 * icd_code_list
